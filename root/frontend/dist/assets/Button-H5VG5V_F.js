@@ -1,1 +1,0 @@
-import{j as e}from"./index-D20nmIH3.js";const u={};function i({children:t,className:s,type:o,onClick:n,id:r}){return e.jsx("button",{onClick:n,className:s,style:u,type:o,id:r,children:t})}export{i as B};

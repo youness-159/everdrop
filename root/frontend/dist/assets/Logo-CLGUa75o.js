@@ -1,1 +1,0 @@
-import{j as r,L as o}from"./index-D20nmIH3.js";import{t}from"./bundle-mjs-3VKOpVsw.js";import{P as e}from"./index-Cq_GCqD9.js";function i({className:s}){return r.jsx("div",{className:t("text-4xl ",s),children:r.jsx(o,{to:"/",children:"LOGO"})})}i.propTypes={className:e.string};export{i as L};

@@ -1,1 +1,0 @@
-import{j as e,L as n}from"./index-D20nmIH3.js";import{B as r}from"./Button-H5VG5V_F.js";function m({title:t,buttonName:s,buttonLink:i}){return e.jsxs("div",{className:"flex justify-between items-baseline ",children:[e.jsx("header",{className:"text-3xl mb-9",children:t}),s&&e.jsx(n,{to:i,children:e.jsx(r,{className:"outlined",children:s})})]})}export{m as A};

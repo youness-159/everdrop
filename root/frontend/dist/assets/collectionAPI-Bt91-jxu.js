@@ -1,1 +1,0 @@
-import{f as a,p as c,u as e,d as n}from"./shopAPI-BOLETFd3.js";const l=async()=>await a("/collections"+window.location.search),i=async t=>await a(`/collections/${t}`),r=async t=>await c("/collections",t),u=async(t,o)=>await e(`/collections/${t}`,o),d=async t=>await n(`/collections/${t}`);export{l as a,r as c,d,i as g,u};

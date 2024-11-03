@@ -1,1 +1,0 @@
-import{j as i}from"./index-D20nmIH3.js";import{P as r}from"./index-Cq_GCqD9.js";function m({children:o,className:t,onSubmit:e}){return i.jsx("form",{action:"",onSubmit:e,className:t,id:"form",encType:"multipart/form-data",children:o})}m.propTypes={children:r.node.isRequired,className:r.string,onSubmit:r.func};export{m as F};

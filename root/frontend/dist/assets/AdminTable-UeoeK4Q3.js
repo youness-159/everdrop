@@ -1,1 +1,0 @@
-import{j as e}from"./index-D20nmIH3.js";import{t as s}from"./bundle-mjs-3VKOpVsw.js";function l({children:t,className:r}){return e.jsx("div",{className:"py-6 px-12  bg-white rounded-2xl",children:e.jsx("table",{className:s("w-full text-center ",r),children:t})})}export{l as A};
