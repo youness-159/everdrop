@@ -20,7 +20,16 @@ function UpdateProduct() {
 
   if (isLoading) return <Loader />;
 
-  return <ProductForm defaultValues={product} mutate={mutate} />;
+  return (
+    <ProductForm
+      defaultValues={{
+        ...product,
+        colors: product.colors.join(","),
+        sizes: product.sizes.join(","),
+      }}
+      mutate={mutate}
+    />
+  );
 }
 
 export default UpdateProduct;

@@ -33,13 +33,24 @@ export const createProduct = async (product) => {
 };
 
 export const updateProduct = async (id, product) => {
+  const Obj = { ...product };
+  const formData = new FormData();
+
+  let i = 0;
+  while (Obj["image-" + i]) {
+    formData.append("images", Obj["image-" + i][0]);
+    delete Obj["image" + i];
+    i++;
+  }
   delete product["images"];
   delete product["_id"];
   delete product["__v"];
   delete product["createdAt"];
 
   product.coverImage = product["coverImage"][0];
-  return await updateData(`/products/${id}`, product, "multipart/form-data");
+
+  await updateData(`/products/${id}`, Obj);
+  return await updateData(`/products/${id}`, formData, "multipart/form-data");
 };
 
 export const deleteProduct = async (id) => {
