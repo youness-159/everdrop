@@ -1,0 +1,1 @@
+import{u as a}from"./useQuery-BIalZ7-4.js";import{b as u}from"./categoryAPI-Dutoc9WM.js";function g(r){const{data:e,isLoading:o,error:t}=a({queryKey:["category"],queryFn:()=>u(r)});return{category:e,isLoading:o,error:t}}export{g as u};

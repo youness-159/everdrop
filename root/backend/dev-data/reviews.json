@@ -1,0 +1,38 @@
+[
+  {
+    "review": "Great product! Really happy with my purchase.",
+    "rating": 5,
+    "product": "60d21b8667d0d8992e610c85",
+    "user": "60d21b8667d0d8992e610d85",
+    "createdAt": "2024-05-20T12:34:56.789Z"
+  },
+  {
+    "review": "Good quality but took a bit longer to arrive.",
+    "rating": 4,
+    "product": "60d21b8667d0d8992e610c86",
+    "user": "60d21b8667d0d8992e610d86",
+    "createdAt": "2024-05-19T10:22:33.456Z"
+  },
+  {
+    "review": "Disappointed with the product, not as described.",
+    "rating": 2,
+    "product": "60d21b8667d0d8992e610c87",
+    "user": "60d21b8667d0d8992e610d87",
+    "createdAt": "2024-05-18T08:11:22.123Z"
+  },
+  {
+    "review": "Average product, nothing special.",
+    "rating": 3,
+    "product": "60d21b8667d0d8992e610c88",
+    "user": "60d21b8667d0d8992e610d88",
+    "createdAt": "2024-05-17T07:09:10.234Z"
+  },
+  {
+    "review": "Excellent service, fast delivery!",
+    "rating": 5,
+    "product": "60d21b8667d0d8992e610c89",
+    "user": "60d21b8667d0d8992e610d89",
+    "createdAt": "2024-05-16T06:08:09.345Z"
+  }
+]
+

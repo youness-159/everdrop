@@ -1,0 +1,320 @@
+[
+  {
+    "name": "Running Shoes",
+    "price": 79.99,
+    "description": "High-performance running shoes for athletes.",
+    "sku": "RUN123",
+    "weight": 0.8,
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Red",
+      "Blue",
+      "Black"
+    ],
+    "brand": "Sporty",
+    "status": true,
+    "visibility": true,
+    "inStock": true,
+    "availability": true,
+    "quantity": 150,
+    "urlKey": "running-shoes",
+    "metaTitle": "Best Running Shoes",
+    "metaKeywords": [
+      "running",
+      "shoes",
+      "athletic"
+    ],
+    "metaDescription": "Shop the best running shoes for top performance."
+  },
+  {
+    "name": "Basketball Shoes",
+    "price": 99.99,
+    "description": "Durable basketball shoes with excellent grip.",
+    "sku": "BB123",
+    "weight": 1.2,
+    "sizes": [
+      "M",
+      "L",
+      "XL",
+      "X"
+    ],
+    "colors": [
+      "Black",
+      "White",
+      "Blue"
+    ],
+    "brand": "Hoopster",
+    "status": true,
+    "visibility": true,
+    "inStock": true,
+    "availability": true,
+    "quantity": 200,
+    "urlKey": "basketball-shoes",
+    "metaTitle": "Top Basketball Shoes",
+    "metaKeywords": [
+      "basketball",
+      "shoes",
+      "sport"
+    ],
+    "metaDescription": "Shop the best basketball shoes for unbeatable performance."
+  },
+  {
+    "name": "Casual Sneakers",
+    "price": 59.99,
+    "description": "Comfortable casual sneakers for everyday wear.",
+    "sku": "CAS123",
+    "weight": 0.6,
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "X"
+    ],
+    "colors": [
+      "White",
+      "Grey",
+      "Black"
+    ],
+    "brand": "Comfy",
+    "status": true,
+    "visibility": true,
+    "inStock": true,
+    "availability": true,
+    "quantity": 300,
+    "urlKey": "casual-sneakers",
+    "metaTitle": "Comfortable Casual Sneakers",
+    "metaKeywords": [
+      "casual",
+      "sneakers",
+      "comfortable"
+    ],
+    "metaDescription": "Shop the most comfortable casual sneakers for everyday wear."
+  },
+  {
+    "name": "Hiking Boots",
+    "price": 129.99,
+    "description": "Sturdy hiking boots for rugged terrain.",
+    "sku": "HIK123",
+    "weight": 1.5,
+    "sizes": [
+      "M",
+      "L",
+      "XL",
+      "X"
+    ],
+    "colors": [
+      "Brown",
+      "Green",
+      "Black"
+    ],
+    "brand": "TrailBlazer",
+    "status": true,
+    "visibility": true,
+    "inStock": true,
+    "availability": true,
+    "quantity": 100,
+    "urlKey": "hiking-boots",
+    "metaTitle": "Durable Hiking Boots",
+    "metaKeywords": [
+      "hiking",
+      "boots",
+      "outdoor"
+    ],
+    "metaDescription": "Shop the most durable hiking boots for rugged terrain."
+  },
+  {
+    "name": "Tennis Shoes",
+    "price": 89.99,
+    "description": "Lightweight tennis shoes with superior grip.",
+    "sku": "TEN123",
+    "weight": 0.9,
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "White",
+      "Green",
+      "Blue"
+    ],
+    "brand": "Ace",
+    "status": true,
+    "visibility": true,
+    "inStock": true,
+    "availability": true,
+    "quantity": 250,
+    "urlKey": "tennis-shoes",
+    "metaTitle": "Top Tennis Shoes",
+    "metaKeywords": [
+      "tennis",
+      "shoes",
+      "lightweight"
+    ],
+    "metaDescription": "Shop the top lightweight tennis shoes with superior grip."
+  },
+  {
+    "name": "Formal Shoes",
+    "price": 149.99,
+    "description": "Elegant formal shoes for special occasions.",
+    "sku": "FOR123",
+    "weight": 1.0,
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "Brown"
+    ],
+    "brand": "Elegance",
+    "status": true,
+    "visibility": true,
+    "inStock": true,
+    "availability": true,
+    "quantity": 50,
+    "urlKey": "formal-shoes",
+    "metaTitle": "Elegant Formal Shoes",
+    "metaKeywords": [
+      "formal",
+      "shoes",
+      "elegant"
+    ],
+    "metaDescription": "Shop the most elegant formal shoes for special occasions."
+  },
+  {
+    "name": "Flip Flops",
+    "price": 19.99,
+    "description": "Comfortable flip flops for casual wear.",
+    "sku": "FLIP123",
+    "weight": 0.3,
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Blue",
+      "Black",
+      "Yellow"
+    ],
+    "brand": "BeachLife",
+    "status": true,
+    "visibility": true,
+    "inStock": true,
+    "availability": true,
+    "quantity": 500,
+    "urlKey": "flip-flops",
+    "metaTitle": "Comfortable Flip Flops",
+    "metaKeywords": [
+      "flip flops",
+      "casual",
+      "comfortable"
+    ],
+    "metaDescription": "Shop the most comfortable flip flops for casual wear."
+  },
+  {
+    "name": "Soccer Cleats",
+    "price": 119.99,
+    "description": "High-performance soccer cleats for competitive play.",
+    "sku": "SOC123",
+    "weight": 0.7,
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Red",
+      "Green",
+      "Blue"
+    ],
+    "brand": "Goal",
+    "status": true,
+    "visibility": true,
+    "inStock": true,
+    "availability": true,
+    "quantity": 120,
+    "urlKey": "soccer-cleats",
+    "metaTitle": "High-Performance Soccer Cleats",
+    "metaKeywords": [
+      "soccer",
+      "cleats",
+      "performance"
+    ],
+    "metaDescription": "Shop high-performance soccer cleats for competitive play."
+  },
+  {
+    "name": "Sandals",
+    "price": 39.99,
+    "description": "Comfortable sandals for everyday use.",
+    "sku": "SAN123",
+    "weight": 0.5,
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "Brown",
+      "Tan"
+    ],
+    "brand": "ComfortStep",
+    "status": true,
+    "visibility": true,
+    "inStock": true,
+    "availability": true,
+    "quantity": 200,
+    "urlKey": "sandals",
+    "metaTitle": "Comfortable Everyday Sandals",
+    "metaKeywords": [
+      "sandals",
+      "comfortable",
+      "everyday"
+    ],
+    "metaDescription": "Shop comfortable sandals for everyday use."
+  },
+  {
+    "name": "Work Boots",
+    "price": 139.99,
+    "description": "Sturdy work boots for tough jobs.",
+    "sku": "WORK123",
+    "weight": 1.8,
+    "sizes": [
+      "M",
+      "L",
+      "XL",
+      "X"
+    ],
+    "colors": [
+      "Brown",
+      "Black"
+    ],
+    "brand": "ToughWear",
+    "status": true,
+    "visibility": true,
+    "inStock": true,
+    "availability": true,
+    "quantity": 90,
+    "urlKey": "work-boots",
+    "metaTitle": "Sturdy Work Boots",
+    "metaKeywords": [
+      "work",
+      "boots",
+      "sturdy"
+    ],
+    "metaDescription": "Shop the most sturdy work boots for tough jobs."
+  }
+]

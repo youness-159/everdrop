@@ -1,0 +1,9 @@
+
+:global(.active) {
+    @apply border-zinc-700 text-zinc-700 bg-zinc-50;
+}
+
+:global(.settings.active) {
+    @apply text-zinc-50 bg-zinc-600  ;
+}
+

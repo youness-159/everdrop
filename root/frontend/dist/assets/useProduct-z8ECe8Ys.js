@@ -1,0 +1,1 @@
+import{u as e}from"./useQuery-BIalZ7-4.js";import{e as s}from"./productAPI-DVH5Y8XO.js";function d(r){const{data:o,isLoading:u,error:t}=e({queryKey:["product"],queryFn:()=>s(r)});return{product:o,isLoading:u,error:t}}export{d as u};

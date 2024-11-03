@@ -1,0 +1,1 @@
+import{j as s}from"./index-D20nmIH3.js";import{B as e}from"./Button-H5VG5V_F.js";function a(){return s.jsxs("div",{className:"space-x-12",children:[s.jsx(e,{type:"submit",className:"w-80 filled",children:"Save"}),s.jsx(e,{type:"reset",className:"w-80 filled warning",children:"Cancel"})]})}export{a as F};

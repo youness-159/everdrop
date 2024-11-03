@@ -1,0 +1,13 @@
+[
+  {
+    "name": "DigitalDesignClips",
+    "description": "A store for digital planners and design assets",
+    "phoneNumber": 1234567890,
+    "email": "contact@digitaldesignclips.com",
+    "country": "USA",
+    "address": "123 Planner Street",
+    "city": "Planner City",
+    "province": "CA",
+    "postalCode": "12345"
+  }
+]

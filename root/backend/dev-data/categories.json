@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Electronics",
+    "description": "All kinds of electronic gadgets and devices",
+    "categories": [
+      "Phones",
+      "Laptops",
+      "Tablets"
+    ],
+    "urlKey": "electronics",
+    "metaTitle": "Electronics - Best Gadgets",
+    "metaKeywords": [
+      "electronics",
+      "gadgets",
+      "devices"
+    ],
+    "metaDescription": "Shop the latest electronics, gadgets, and devices",
+    "image": "electronics.jpg",
+    "status": true,
+    "inStartMenu": true,
+    "createdAt": "2024-07-17T00:00:00.000Z"
+  },
+  {
+    "name": "Home & Kitchen",
+    "description": "Home appliances and kitchenware",
+    "categories": [
+      "Appliances",
+      "Cookware",
+      "Furniture"
+    ],
+    "urlKey": "home-kitchen",
+    "metaTitle": "Home & Kitchen - Best Appliances",
+    "metaKeywords": [
+      "home",
+      "kitchen",
+      "appliances"
+    ],
+    "metaDescription": "Find the best appliances and kitchenware for your home",
+    "image": "home_kitchen.jpg",
+    "status": true,
+    "inStartMenu": false,
+    "createdAt": "2024-07-17T00:00:00.000Z"
+  },
+  {
+    "name": "Fashion",
+    "description": "Trendy clothing and accessories",
+    "categories": [
+      "Men",
+      "Women",
+      "Kids"
+    ],
+    "urlKey": "fashion",
+    "metaTitle": "Fashion - Trendy Clothing",
+    "metaKeywords": [
+      "fashion",
+      "clothing",
+      "accessories"
+    ],
+    "metaDescription": "Discover the latest trends in fashion and accessories",
+    "image": "fashion.jpg",
+    "status": false,
+    "inStartMenu": true,
+    "createdAt": "2024-07-17T00:00:00.000Z"
+  }
+]

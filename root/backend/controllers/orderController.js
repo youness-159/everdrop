@@ -1,0 +1,222 @@
+const factory = require("./handlerFactory");
+const Order = require("../models/orderModel.js");
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/AppError");
+const Cart = require("../models/cartModel");
+
+const Stripe = require("stripe");
+const req = require("express/lib/request");
+const Product = require("../models/productModel");
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+
+async function UpdateOrderDeleteCart(session, userId) {
+  await updateOrderAfterSuccessCheckout(session);
+  await Cart.deleteMany({ user: userId });
+}
+
+async function updateOrderAfterSuccessCheckout(session) {
+  const orderId = session.client_reference_id;
+  await Order.findByIdAndUpdate(orderId, { paid: true });
+}
+
+function getTotalPrice(carts) {
+  let totalPrice = 0;
+
+  carts.forEach((cart) => {
+    totalPrice += cart.product.price * cart.quantity;
+  });
+  return totalPrice;
+}
+
+const getCheckoutLineItems = async (carts) => {
+  const line_items = [];
+
+  await Promise.all(
+    carts.map(async (cart) => {
+      const stripeLineItem = {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: cart.product.name,
+            description: cart.product.description,
+            images: [
+              `${req.protocol}://${req.get("host")}/imgs/products/${cart.product.coverImage}`,
+            ],
+          },
+          unit_amount: Math.ceil(cart.product.price * 100),
+        },
+        quantity: cart.quantity,
+      };
+      line_items.push(stripeLineItem);
+    }),
+  );
+
+  return line_items;
+};
+
+exports.getCheckoutSession = catchAsync(async (req, res, next) => {
+  const line_items = await getCheckoutLineItems(req.carts);
+
+  const session = await stripe.checkout.sessions.create({
+    mode: "payment",
+    payment_method_types: ["card"],
+    success_url: `http://localhost:5173/checkout-success`,
+    cancel_url: `http://localhost:5173/cart`,
+    customer_email: req.user.email,
+    client_reference_id: req.orderId,
+    line_items,
+  });
+
+  res.status(200).json({ status: "success", data: session });
+});
+
+exports.webhookCheckout = async (req, res) => {
+  const signature = req.headers["stripe-signature"];
+
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET,
+    );
+  } catch (err) {
+    return res.status(400).send(`Webhook error: ${err.message}`);
+  }
+
+  if (event.type === "checkout.session.completed")
+    await UpdateOrderDeleteCart(event.data.object, req.user._id);
+
+  res.status(200).json({ received: true });
+};
+
+exports.createOrderCheckout = catchAsync(async (req, res, next) => {
+  const carts = await Cart.find({ user: req.user._id }).populate({
+    path: "product",
+    select: "price coverImage",
+  });
+  if (!carts) return next(new AppError("No Cart found!", 404));
+
+  const newOrder = {
+    products: carts.map((cart) => ({
+      _id: cart.productId,
+      color: cart.productColor,
+      size: cart.productSize,
+      quantity: cart.quantity,
+      coverImage: cart.product.coverImage,
+    })),
+    user: req.user._id,
+    price: getTotalPrice(carts).toFixed(2),
+  };
+
+  const orderId = (await Order.create(newOrder))._id;
+  if (!orderId) return next(new AppError("order creation failed !!", 500));
+
+  req.orderId = orderId;
+  req.carts = carts;
+});
+
+exports.getMyOrders = catchAsync(async (req, res, next) => {
+  const myOrders = await Order.find({ user: req.user._id }).sort({
+    createdAt: -1,
+  });
+  if (!myOrders) return next(new AppError("order not found", 404));
+
+  res.status(200).json({ status: "success", data: myOrders });
+});
+
+exports.getSalesPerWeek = catchAsync(async (req, res, next) => {
+  const stats = await Order.aggregate([
+    {
+      $group: {
+        _id: {
+          year: "$createdAt",
+          month: "$createdAt",
+          $dayOfWeek: "$createdAt",
+        },
+        sales: { $sum: 1 },
+        total: { $sum: "$price" },
+      },
+    },
+    { sort: { _id: 1 } },
+  ]).limit(7);
+
+  if (!stats) return next(new AppError("no sales found !!", 404));
+
+  const daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  const weekStats = stats.map((item, i) => {
+    return { day: daysOfWeek[i], sales: item.sales };
+  });
+
+  res.status(200).json({ status: "success", data: weekStats });
+});
+
+exports.getSalesPerMonth = catchAsync(async (req, res, next) => {
+  const stats = await Order.aggregate([
+    { $match: { paid: false } },
+    {
+      $group: {
+        _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } },
+        sales: { $sum: 1 },
+        total: { $sum: "$price" },
+      },
+    },
+    { $sort: { "_id.year": 1, "_id.month": 1 } },
+  ]).limit(12);
+
+  if (!stats) return next(new AppError("no sales found !!", 404));
+
+  res.status(200).json({ status: "success", data: stats });
+});
+
+exports.getSalesPerDay = catchAsync(async (req, res, next) => {
+  const stats = await Order.aggregate([
+    {
+      $group: {
+        _id: {
+          year: { $year: "$createdAt" },
+          month: { $month: "$createdAt" },
+          day: { $day: "$createdAt" },
+        },
+        sales: { $sum: 1 },
+        total: { $sum: "$price" },
+      },
+    },
+    { sort: { "_id.year": 1, "_id.month": 1, "_id.day": 1 } },
+  ]).limit(24);
+
+  if (!stats) return next(new AppError("no sales found !!", 404));
+
+  res.status(200).json({ status: "success", data: stats });
+});
+
+exports.getTotalSales = catchAsync(async (req, res, next) => {
+  const sales = await Order.aggregate([
+    { $match: { paid: false } },
+    {
+      $group: {
+        _id: null,
+        total: { $sum: "$price" },
+      },
+    },
+  ]);
+
+  if (!sales) return next(new AppError("no sales found !!", 404));
+  res.status(200).json({ status: "success", data: sales });
+});
+
+exports.getOrdersLength = factory.getLengthOf(Order);
+exports.getAllOrders = factory.getAll(Order, { path: "user", select: "email" });
+exports.getOrderById = factory.getOneById(Order);
+exports.createOrder = factory.createOne(Order);
+exports.updateOrderById = factory.updateOneById(Order);
+exports.deleteOrderById = factory.deleteOneById(Order);

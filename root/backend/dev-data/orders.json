@@ -1,0 +1,32 @@
+[
+  {
+    "product": [
+      "60b6c0f5f1d5a2a5a8e7a6b8",
+      "60b6c0f5f1d5a2a5a8e7a6b9"
+    ],
+    "user": "60b6c0f5f1d5a2a5a8e7a6ba",
+    "price": 120.50,
+    "paid": true,
+    "createdAt": "2024-07-17T00:00:00.000Z"
+  },
+  {
+    "product": [
+      "60b6c0f5f1d5a2a5a8e7a6bb",
+      "60b6c0f5f1d5a2a5a8e7a6bc"
+    ],
+    "user": "60b6c0f5f1d5a2a5a8e7a6bd",
+    "price": 75.00,
+    "paid": false,
+    "createdAt": "2024-07-17T00:00:00.000Z"
+  },
+  {
+    "product": [
+      "60b6c0f5f1d5a2a5a8e7a6be",
+      "60b6c0f5f1d5a2a5a8e7a6bf"
+    ],
+    "user": "60b6c0f5f1d5a2a5a8e7a6c0",
+    "price": 200.00,
+    "paid": true,
+    "createdAt": "2024-07-17T00:00:00.000Z"
+  }
+]

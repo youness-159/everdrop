@@ -1,0 +1,29 @@
+[
+  {
+    "uniqueId": "collection1",
+    "products": [
+      "60b6c0f5f1d5a2a5a8e7a6b8",
+      "60b6c0f5f1d5a2a5a8e7a6b9"
+    ],
+    "description": "A collection of top-selling products",
+    "createdAt": "2024-07-17T00:00:00.000Z"
+  },
+  {
+    "uniqueId": "collection2",
+    "products": [
+      "60b6c0f5f1d5a2a5a8e7a6ba",
+      "60b6c0f5f1d5a2a5a8e7a6bb"
+    ],
+    "description": "A curated collection of new arrivals",
+    "createdAt": "2024-07-17T00:00:00.000Z"
+  },
+  {
+    "uniqueId": "collection3",
+    "products": [
+      "60b6c0f5f1d5a2a5a8e7a6bc",
+      "60b6c0f5f1d5a2a5a8e7a6bd"
+    ],
+    "description": "A special collection for seasonal sales",
+    "createdAt": "2024-07-17T00:00:00.000Z"
+  }
+]

@@ -1,0 +1,1 @@
+import{u as t}from"./useQuery-BIalZ7-4.js";import{a as s}from"./collectionAPI-Bt91-jxu.js";function c(){const{data:o,error:e,isLoading:r}=t({queryKey:["collections"],queryFn:s});return{collections:o,isLoading:r,error:e}}export{c as U};

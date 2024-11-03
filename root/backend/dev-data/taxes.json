@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Standard VAT",
+    "rate": 20,
+    "country": "United Kingdom",
+    "region": "England",
+    "type": "percentage",
+    "isActive": true,
+    "description": "Standard VAT rate applied to most goods and services."
+  },
+  {
+    "name": "Reduced VAT",
+    "rate": 5,
+    "country": "United Kingdom",
+    "region": "Scotland",
+    "type": "percentage",
+    "isActive": true,
+    "description": "Reduced VAT rate for certain goods and services."
+  },
+  {
+    "name": "Sales Tax",
+    "rate": 8.25,
+    "country": "United States",
+    "region": "California",
+    "type": "percentage",
+    "isActive": true,
+    "description": "Sales tax applied to retail sales."
+  },
+  {
+    "name": "GST",
+    "rate": 10,
+    "country": "Australia",
+    "region": "New South Wales",
+    "type": "percentage",
+    "isActive": true,
+    "description": "Goods and Services Tax."
+  },
+  {
+    "name": "Zero VAT",
+    "rate": 0,
+    "country": "United Kingdom",
+    "region": "Wales",
+    "type": "percentage",
+    "isActive": true,
+    "description": "Zero VAT rate for certain goods and services."
+  },
+  {
+    "name": "Service Tax",
+    "rate": 15,
+    "country": "India",
+    "region": "Maharashtra",
+    "type": "percentage",
+    "isActive": false,
+    "description": "Service tax applied to service transactions."
+  }
+]

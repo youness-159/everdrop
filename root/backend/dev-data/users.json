@@ -1,0 +1,35 @@
+[
+  {
+    "username": "john_doe",
+    "email": "john.doe@example.com",
+    "role": [
+      "user"
+    ],
+    "password": "password123",
+    "passwordChangedAt": "2024-07-17T12:00:00.000Z",
+    "status": true,
+    "createdAt": "2024-07-17T10:00:00.000Z"
+  },
+  {
+    "username": "jane_smith",
+    "email": "jane.smith@example.com",
+    "role": [
+      "admin"
+    ],
+    "password": "securepassword456",
+    "passwordChangedAt": "2024-07-16T15:30:00.000Z",
+    "status": true,
+    "createdAt": "2024-07-16T14:00:00.000Z"
+  },
+  {
+    "username": "sam_jones",
+    "email": "sam.jones@example.com",
+    "role": [
+      "user"
+    ],
+    "password": "strongpassword789",
+    "passwordChangedAt": "2024-07-15T09:45:00.000Z",
+    "status": true,
+    "createdAt": "2024-07-15T08:00:00.000Z"
+  }
+]

@@ -1,0 +1,68 @@
+[
+  {
+    "code": "SUMMER2024",
+    "description": "Summer Sale 2024 - 20% off on all items",
+    "status": true,
+    "discountAmount": 20,
+    "startDate": "2024-07-01T00:00:00.000Z",
+    "endDate": "2024-08-31T23:59:59.000Z",
+    "hasFreeShipping": true,
+    "discountType": "percentage",
+    "minPurchaseAmount": 50,
+    "minPurchaseQty": 1,
+    "customers": [
+      "60b6c0f5f1d5a2a5a8e7a6be",
+      "60b6c0f5f1d5a2a5a8e7a6bf"
+    ],
+    "customersEmails": [
+      "customer1@example.com",
+      "customer2@example.com"
+    ],
+    "minCustomerPurchaseAmount": 100,
+    "createdAt": "2024-07-17T00:00:00.000Z"
+  },
+  {
+    "code": "WELCOME2024",
+    "description": "Welcome Offer - $10 off on first purchase",
+    "status": true,
+    "discountAmount": 10,
+    "startDate": "2024-07-01T00:00:00.000Z",
+    "endDate": "2024-12-31T23:59:59.000Z",
+    "hasFreeShipping": false,
+    "discountType": "fixed_amount",
+    "minPurchaseAmount": 20,
+    "minPurchaseQty": 1,
+    "customers": [
+      "60b6c0f5f1d5a2a5a8e7a6c0",
+      "60b6c0f5f1d5a2a5a8e7a6c1"
+    ],
+    "customersEmails": [
+      "customer3@example.com",
+      "customer4@example.com"
+    ],
+    "minCustomerPurchaseAmount": 30,
+    "createdAt": "2024-07-17T00:00:00.000Z"
+  },
+  {
+    "code": "FREESHIP2024",
+    "description": "Free Shipping on orders over $75",
+    "status": true,
+    "discountAmount": 0,
+    "startDate": "2024-07-01T00:00:00.000Z",
+    "endDate": "2024-12-31T23:59:59.000Z",
+    "hasFreeShipping": true,
+    "discountType": "fixed_amount",
+    "minPurchaseAmount": 75,
+    "minPurchaseQty": 1,
+    "customers": [
+      "60b6c0f5f1d5a2a5a8e7a6c2",
+      "60b6c0f5f1d5a2a5a8e7a6c3"
+    ],
+    "customersEmails": [
+      "customer5@example.com",
+      "customer6@example.com"
+    ],
+    "minCustomerPurchaseAmount": 50,
+    "createdAt": "2024-07-17T00:00:00.000Z"
+  }
+]

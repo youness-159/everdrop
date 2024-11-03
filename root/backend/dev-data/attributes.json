@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Color",
+    "code": "color",
+    "type": "String",
+    "require": true,
+    "isFilterable": true,
+    "display": true,
+    "sort": 1,
+    "createdAt": "2024-07-17T00:00:00.000Z"
+  },
+  {
+    "name": "Size",
+    "code": "size",
+    "type": "String",
+    "require": true,
+    "isFilterable": true,
+    "display": true,
+    "sort": 2,
+    "createdAt": "2024-07-17T00:00:00.000Z"
+  },
+  {
+    "name": "Material",
+    "code": "material",
+    "type": "String",
+    "require": false,
+    "isFilterable": false,
+    "display": false,
+    "sort": 3,
+    "createdAt": "2024-07-17T00:00:00.000Z"
+  }
+]

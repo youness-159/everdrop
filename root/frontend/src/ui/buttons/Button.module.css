@@ -1,0 +1,27 @@
+button {
+    &:global(.outlined) {
+        @apply px-6 py-4  border border-zinc-700 hover:border-zinc-600 hover:bg-zinc-600 hover:text-white transition duration-[.5s] ease-in-out text-zinc-700 bg-white rounded-xl;
+
+        &:global(.danger) {
+            @apply border-rose-700 text-rose-700 hover:bg-rose-600 hover:border-rose-600 hover:text-white ;
+        }
+
+        &:global(.warning) {
+            @apply border-amber-700 text-amber-700 hover:bg-amber-600 hover:border-amber-600 hover:text-white ;
+        }
+    }
+
+    &:global(.filled) {
+        @apply border border-transparent  px-6 py-4 bg-zinc-700 text-white rounded-xl hover:bg-zinc-800 transition duration-[.3s] ease-in-out ;
+
+        &:global(.danger) {
+            @apply bg-rose-700 hover:bg-rose-800 hover:border-rose-800 ;
+        }
+
+        &:global(.warning) {
+            @apply bg-amber-700 hover:bg-amber-800 hover:border-amber-800 ;
+        }
+    }
+
+
+}
