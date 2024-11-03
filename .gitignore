@@ -1,4 +1,3 @@
 root/frontend/node_modules
 root/backend/node_modules
 .idea
-root/backend/config.env
