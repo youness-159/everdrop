@@ -2,72 +2,42 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import CheckoutSuccessPage from "./pages/CheckoutSuccessPage.jsx";
 import FallbackLoader from "./ui/FallbackLoader.jsx";
 
-const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
-const AdminLayout = lazy(() => import("./pages/admin/AdminLayout"));
-const Products = lazy(
-  () => import("./pages/admin/product-pages/AdminProducts.jsx"),
-);
-const Categories = lazy(
-  () => import("./pages/admin/category-pages/Categories.jsx"),
-);
-const Collections = lazy(
-  () => import("./pages/admin/collection-pages/Collections.jsx"),
-);
-const Orders = lazy(() => import("./pages/admin/Orders.jsx"));
-const Customers = lazy(() => import("./pages/admin/Customers.jsx"));
-const Coupons = lazy(() => import("./pages/admin/coupon-pages/Coupons.jsx"));
-const Settings = lazy(() => import("./pages/admin/Settings.jsx"));
-const StoreSetting = lazy(
-  () => import("./pages/admin/Settings/StoreSetting.jsx"),
-);
-const PaymentSetting = lazy(
-  () => import("./pages/admin/Settings/PaymentSetting.jsx"),
-);
-const ShippingSetting = lazy(
-  () => import("./pages/admin/Settings/ShippingSetting.jsx"),
-);
-const TaxSetting = lazy(() => import("./pages/admin/Settings/TaxSetting.jsx"));
-const NewProduct = lazy(
-  () => import("./pages/admin/product-pages/NewProduct.jsx"),
-);
-const NewCoupon = lazy(
-  () => import("./pages/admin/coupon-pages/NewCoupon.jsx"),
-);
-const NewCollection = lazy(
-  () => import("./pages/admin/collection-pages/NewCollection.jsx"),
-);
-const UpdateProduct = lazy(
-  () => import("./pages/admin/product-pages/UpdateProduct.jsx"),
-);
-const UpdateCoupon = lazy(
-  () => import("./pages/admin/coupon-pages/UpdateCoupon.jsx"),
-);
-const UpdateCollection = lazy(
-  () => import("./pages/admin/collection-pages/UpdateCollection.jsx"),
-);
-const NewCategory = lazy(
-  () => import("./pages/admin/category-pages/NewCategory.jsx"),
-);
-const UpdateCategory = lazy(
-  () => import("./pages/admin/category-pages/UpdateCategory.jsx"),
-);
-const Login = lazy(() => import("./pages/Login.jsx"));
-const Signup = lazy(() => import("./pages/Signup.jsx"));
-const Home = lazy(() => import("./pages/frontStore/Home.jsx"));
-const FrontStoreLayout = lazy(
-  () => import("./pages/frontStore/FrontStoreLayout.jsx"),
-);
-const ProductsPage = lazy(() => import("./pages/frontStore/ProductsPage.jsx"));
-const ProductPage = lazy(() => import("./pages/frontStore/ProductPage.jsx"));
-const UserContextAPI = lazy(() => import("./context/userContextAPI.jsx"));
-const Account = lazy(() => import("./pages/frontStore/Account.jsx"));
-const Cart = lazy(() => import("./pages/frontStore/Cart.jsx"));
-const ForgotPassword = lazy(() => import("./pages/ForgotPassword.jsx"));
-const ResetPassword = lazy(() => import("./pages/ResetPassword.jsx"));
+import Dashboard from "./pages/admin/Dashboard";
+import AdminLayout from "./pages/admin/AdminLayout";
+import Products from "./pages/admin/product-pages/AdminProducts.jsx";
+import Categories from "./pages/admin/category-pages/Categories.jsx";
+import Collections from "./pages/admin/collection-pages/Collections.jsx";
+import Orders from "./pages/admin/Orders.jsx";
+import Customers from "./pages/admin/Customers.jsx";
+import Coupons from "./pages/admin/coupon-pages/Coupons.jsx";
+import Settings from "./pages/admin/Settings.jsx";
+import StoreSetting from "./pages/admin/Settings/StoreSetting.jsx";
+import PaymentSetting from "./pages/admin/Settings/PaymentSetting.jsx";
+import ShippingSetting from "./pages/admin/Settings/ShippingSetting.jsx";
+import TaxSetting from "./pages/admin/Settings/TaxSetting.jsx";
+import NewProduct from "./pages/admin/product-pages/NewProduct.jsx";
+import NewCoupon from "./pages/admin/coupon-pages/NewCoupon.jsx";
+import NewCollection from "./pages/admin/collection-pages/NewCollection.jsx";
+import UpdateProduct from "./pages/admin/product-pages/UpdateProduct.jsx";
+import UpdateCoupon from "./pages/admin/coupon-pages/UpdateCoupon.jsx";
+import UpdateCollection from "./pages/admin/collection-pages/UpdateCollection.jsx";
+import NewCategory from "./pages/admin/category-pages/NewCategory.jsx";
+import UpdateCategory from "./pages/admin/category-pages/UpdateCategory.jsx";
+import Login from "./pages/Login.jsx";
+import Signup from "./pages/Signup.jsx";
+import Home from "./pages/frontStore/Home.jsx";
+import FrontStoreLayout from "./pages/frontStore/FrontStoreLayout.jsx";
+import ProductsPage from "./pages/frontStore/ProductsPage.jsx";
+import ProductPage from "./pages/frontStore/ProductPage.jsx";
+import UserContextAPI from "./context/userContextAPI.jsx";
+import Account from "./pages/frontStore/Account.jsx";
+import Cart from "./pages/frontStore/Cart.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
 
 const router = createBrowserRouter([
   {

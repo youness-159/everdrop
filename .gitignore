@@ -1,3 +1,4 @@
 root/frontend/node_modules
+root/frontend/dist
 root/backend/node_modules
 .idea
