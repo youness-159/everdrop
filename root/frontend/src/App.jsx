@@ -2,9 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Suspense } from "react";
 import CheckoutSuccessPage from "./pages/CheckoutSuccessPage.jsx";
-import FallbackLoader from "./ui/FallbackLoader.jsx";
 
 import Dashboard from "./pages/admin/Dashboard";
 import AdminLayout from "./pages/admin/AdminLayout";
@@ -112,15 +110,13 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <>
-      <Suspense fallback={<FallbackLoader />}>
-        <QueryClientProvider client={queryClient}>
-          <UserContextAPI>
-            <RouterProvider router={router} />
-            <Toaster position={"top-center"} gutter={12} />
-            <ReactQueryDevtools initialIsOpen={false} />
-          </UserContextAPI>
-        </QueryClientProvider>
-      </Suspense>
+      <QueryClientProvider client={queryClient}>
+        <UserContextAPI>
+          <RouterProvider router={router} />
+          <Toaster position={"top-center"} gutter={12} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </UserContextAPI>
+      </QueryClientProvider>
     </>
   );
 }
