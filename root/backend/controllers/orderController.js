@@ -28,6 +28,32 @@ function getTotalPrice(carts) {
   return totalPrice;
 }
 
+exports.createOrderCheckout = catchAsync(async (req, res, next) => {
+  const carts = await Cart.find({ user: req.user._id }).populate({
+    path: "product",
+    select: "name price coverImage",
+  });
+  if (!carts) return next(new AppError("No Cart found!", 404));
+
+  const newOrder = {
+    products: carts.map((cart) => ({
+      _id: cart.productId,
+      color: cart.productColor,
+      size: cart.productSize,
+      quantity: cart.quantity,
+      coverImage: cart.product.coverImage,
+    })),
+    user: req.user._id,
+    price: getTotalPrice(carts).toFixed(2),
+  };
+
+  const orderId = await Order.create(newOrder);
+  if (!orderId) return next(new AppError("order creation failed !!", 500));
+  req.orderId = orderId._id.toString()
+  req.carts = carts;
+  next();
+});
+
 const getCheckoutLineItems = (req) => {
   return req.carts.map((cart) => ({
     price_data: {
@@ -83,31 +109,6 @@ exports.webhookCheckout = async (req, res) => {
   res.status(200).json({ received: true });
 };
 
-exports.createOrderCheckout = catchAsync(async (req, res, next) => {
-  const carts = await Cart.find({ user: req.user._id }).populate({
-    path: "product",
-    select: "name price coverImage",
-  });
-  if (!carts) return next(new AppError("No Cart found!", 404));
-
-  const newOrder = {
-    products: carts.map((cart) => ({
-      _id: cart.productId,
-      color: cart.productColor,
-      size: cart.productSize,
-      quantity: cart.quantity,
-      coverImage: cart.product.coverImage,
-    })),
-    user: req.user._id,
-    price: getTotalPrice(carts).toFixed(2),
-  };
-
-  const orderId = await Order.create(newOrder);
-  if (!orderId) return next(new AppError("order creation failed !!", 500));
-  req.orderId = orderId._id.toString()
-  req.carts = carts;
-  next();
-});
 
 exports.getMyOrders = catchAsync(async (req, res, next) => {
   const myOrders = await Order.find({ user: req.user._id }).sort({
