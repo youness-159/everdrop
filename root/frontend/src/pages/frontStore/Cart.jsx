@@ -78,6 +78,7 @@ function FilledCart({ cartItems }) {
     document.getElementById("checkout-button").innerHTML = "isLoading";
 
     const session = await getCheckoutSession();
+    console.log(session)
     if (!session) return toast.error("failed to create session");
 
     await stripe.redirectToCheckout({

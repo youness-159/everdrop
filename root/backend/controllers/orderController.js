@@ -28,42 +28,35 @@ function getTotalPrice(carts) {
   return totalPrice;
 }
 
-const getCheckoutLineItems = async (carts) => {
-  const line_items = [];
-
-  await Promise.all(
-    carts.map(async (cart) => {
-      const stripeLineItem = {
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: cart.product.name,
-            description: cart.product.description,
-            images: [
-              `${req.protocol}://${req.get("host")}/imgs/products/${cart.product.coverImage}`,
-            ],
-          },
-          unit_amount: Math.ceil(cart.product.price * 100),
-        },
-        quantity: cart.quantity,
-      };
-      line_items.push(stripeLineItem);
-    }),
-  );
-
-  return line_items;
+const getCheckoutLineItems = (req) => {
+  return req.carts.map((cart) => ({
+    price_data: {
+      currency: "usd",
+      product_data: {
+        name: cart.product.name,
+        description: cart.product.description,
+        images: [
+          `${req.protocol}://${req.get("host")}/imgs/products/${cart.product.coverImage}`,
+        ],
+      },
+      unit_amount: Math.ceil(cart.product.price * 100),
+    },
+    quantity: cart.quantity,
+  }));
 };
 
+
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
-  const line_items = await getCheckoutLineItems(req.carts);
+  const line_items = await getCheckoutLineItems(req);
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
     payment_method_types: ["card"],
-    success_url: `http://localhost:5173/checkout-success`,
-    cancel_url: `http://localhost:5173/cart`,
+    success_url: `${process.env.FRONTEND_URL}/payment-checkout?status=success`,
+    cancel_url: `${process.env.FRONTEND_URL}/payment-checkout?status=fail`,
     customer_email: req.user.email,
     client_reference_id: req.orderId,
+
     line_items,
   });
 
@@ -93,7 +86,7 @@ exports.webhookCheckout = async (req, res) => {
 exports.createOrderCheckout = catchAsync(async (req, res, next) => {
   const carts = await Cart.find({ user: req.user._id }).populate({
     path: "product",
-    select: "price coverImage",
+    select: "name price coverImage",
   });
   if (!carts) return next(new AppError("No Cart found!", 404));
 
@@ -109,11 +102,11 @@ exports.createOrderCheckout = catchAsync(async (req, res, next) => {
     price: getTotalPrice(carts).toFixed(2),
   };
 
-  const orderId = (await Order.create(newOrder))._id;
+  const orderId = await Order.create(newOrder);
   if (!orderId) return next(new AppError("order creation failed !!", 500));
-
-  req.orderId = orderId;
+  req.orderId = orderId._id.toString()
   req.carts = carts;
+  next();
 });
 
 exports.getMyOrders = catchAsync(async (req, res, next) => {

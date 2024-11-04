@@ -3,8 +3,6 @@ const sgMail = require("@sendgrid/mail");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-console.log(process.env.SENDGRID_API_KEY);
-
 class Email {
   constructor(user, url) {
     this.from = "youness.el.mesbahy.7@gmail.com";
