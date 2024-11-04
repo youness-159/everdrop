@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import CheckoutSuccessPage from "./pages/CheckoutSuccessPage.jsx";
+import PaymentCheckoutStatus from "./pages/PaymentCheckoutStatus.jsx";
 
 import Dashboard from "./pages/admin/Dashboard";
 import AdminLayout from "./pages/admin/AdminLayout";
@@ -94,7 +94,7 @@ const router = createBrowserRouter([
       { path: "/product", element: <ProductPage /> },
       { path: "/cart", element: <Cart /> },
       { path: "/account", element: <Account /> },
-      { path: "/checkout-success", element: <CheckoutSuccessPage /> },
+      { path: "/payment-checkout", element: <PaymentCheckoutStatus /> },
     ],
   },
   { path: "/account/forgot-password", element: <ForgotPassword /> },
