@@ -16,7 +16,6 @@ orderRouter.use(restrictTo("admin"));
 
 orderRouter.route("/").get(orderController.getAllOrders);
 orderRouter.route("/length").get(orderController.getOrdersLength);
-orderRouter.route("/salesPerWeek").get(orderController.getSalesPerWeek);
 orderRouter.route("/salesPerDay").get(orderController.getSalesPerDay);
 orderRouter.route("/salesPerMonth").get(orderController.getSalesPerMonth);
 orderRouter.route("/sales").get(orderController.getTotalSales);

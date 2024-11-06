@@ -119,41 +119,6 @@ exports.getMyOrders = catchAsync(async (req, res, next) => {
   res.status(200).json({ status: "success", data: myOrders });
 });
 
-exports.getSalesPerWeek = catchAsync(async (req, res, next) => {
-  const stats = await Order.aggregate([
-    {
-      $group: {
-        _id: {
-          year: "$createdAt",
-          month: "$createdAt",
-          $dayOfWeek: "$createdAt",
-        },
-        sales: { $sum: 1 },
-        total: { $sum: "$price" },
-      },
-    },
-    { sort: { _id: 1 } },
-  ]).limit(7);
-
-  if (!stats) return next(new AppError("no sales found !!", 404));
-
-  const daysOfWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-
-  const weekStats = stats.map((item, i) => {
-    return { day: daysOfWeek[i], sales: item.sales };
-  });
-
-  res.status(200).json({ status: "success", data: weekStats });
-});
-
 exports.getSalesPerMonth = catchAsync(async (req, res, next) => {
   const stats = await Order.aggregate([
     { $match: { paid: false } },
@@ -164,8 +129,9 @@ exports.getSalesPerMonth = catchAsync(async (req, res, next) => {
         total: { $sum: "$price" },
       },
     },
-    { $sort: { "_id.year": 1, "_id.month": 1 } },
-  ]).limit(12);
+    { $sort: { "_id.year": -1, "_id.month": -1 } },
+    { $limit: 12 },
+  ]);
 
   if (!stats) return next(new AppError("no sales found !!", 404));
 
@@ -179,23 +145,24 @@ exports.getSalesPerDay = catchAsync(async (req, res, next) => {
         _id: {
           year: { $year: "$createdAt" },
           month: { $month: "$createdAt" },
-          day: { $day: "$createdAt" },
+          day: { $dayOfMonth: "$createdAt" },
         },
         sales: { $sum: 1 },
         total: { $sum: "$price" },
       },
     },
-    { sort: { "_id.year": 1, "_id.month": 1, "_id.day": 1 } },
-  ]).limit(24);
+    { $sort: { "_id.year": -1, "_id.month": -1, "_id.day": -1 } },
+    { $limit: 31 },
+  ]);
 
-  if (!stats) return next(new AppError("no sales found !!", 404));
+  if (!stats) return next(new AppError("No sales found!", 404));
 
   res.status(200).json({ status: "success", data: stats });
 });
 
+
 exports.getTotalSales = catchAsync(async (req, res, next) => {
   const sales = await Order.aggregate([
-    { $match: { paid: false } },
     {
       $group: {
         _id: null,
