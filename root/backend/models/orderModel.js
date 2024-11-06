@@ -5,7 +5,15 @@ const Product = require("./productModel");
 const AppError = require("../utils/AppError");
 
 const orderSchema = new mongoose.Schema({
-  products: { type: mongoose.Schema.Types.Array, required: true },
+  products: [
+    {
+      _id: { type: mongoose.Types.ObjectId, ref: "Product" },
+      color: String,
+      size: String,
+      quantity: Number,
+      coverImage: String,
+    },
+  ],
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   price: { type: Number, required: true },
   orderNumber: { type: Number },
@@ -22,7 +30,7 @@ const Order = mongoose.model("Order", orderSchema);
 module.exports = Order;
 
 orderSchema.pre(/^find/, function (next) {
-  this.populate({ path: "user", select: "fullName email" })
+  this.populate({ path: "user", select: "fullName email" });
 
   next();
 });
@@ -30,11 +38,11 @@ orderSchema.pre(/^find/, function (next) {
 orderSchema.pre("save", async function (next) {
   await Promise.all(
     this.products.map(async (product) => {
-      const fetchdProduct = await Product.findById(product._id);
-      if (!fetchdProduct)
+      const fetchedProduct = await Product.findById(product._id);
+      if (!fetchedProduct)
         return next(new AppError("cannot find ordered product", 404));
-      fetchdProduct.sales+=fetchdProduct.quantity;
-      await fetchdProduct.save();
+      fetchedProduct.sales += fetchedProduct.quantity;
+      await fetchedProduct.save();
     }),
   );
 });
