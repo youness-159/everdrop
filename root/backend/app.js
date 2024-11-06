@@ -25,6 +25,7 @@ const storeSettingRoutes = require("./routes/settings/storeSettingRoutes");
 const shippingSettingRoutes = require("./routes/settings/shippingSettingRoutes");
 // const paymentSettingRoutes = require("./routes/settings/paymentSettingRoutes");
 const taxSettingRoutes = require("./routes/settings/taxSettingRoutes");
+const statisticRoutes = require("./routes/statisticRoutes");
 
 const orderController = require("./controllers/orderController");
 const errorController = require("./controllers/errorController");
@@ -89,6 +90,7 @@ app.use("/api/v1/everdrop/categories", categoryRouter);
 app.use("/api/v1/everdrop/shipping-settings", shippingSettingRoutes);
 app.use("/api/v1/everdrop/store-settings", storeSettingRoutes);
 app.use("/api/v1/everdrop/taxes", taxSettingRoutes);
+app.use("/api/v1/everdrop/statistics", statisticRoutes);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Cannot find ${req.originalUrl} on this server !`, 404));
