@@ -22,19 +22,19 @@ const Order = mongoose.model("Order", orderSchema);
 module.exports = Order;
 
 orderSchema.pre(/^find/, function (next) {
-  this.populate({ path: "user", select: "fullName email" }).populate("product");
+  this.populate({ path: "user", select: "fullName email" })
 
   next();
 });
 
-orderSchema.post("save", async function (next) {
+orderSchema.pre("save", async function (next) {
   await Promise.all(
-    this.products.map(async (productId) => {
-      const product = await Product.findById(productId);
-      if (!product)
+    this.products.map(async (product) => {
+      const fetchdProduct = await Product.findById(product._id);
+      if (!fetchdProduct)
         return next(new AppError("cannot find ordered product", 404));
-      ++product.sales;
-      product.save();
+      fetchdProduct.sales+=fetchdProduct.quantity;
+      await fetchdProduct.save();
     }),
   );
 });

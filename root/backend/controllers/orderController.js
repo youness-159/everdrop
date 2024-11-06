@@ -31,13 +31,13 @@ function getTotalPrice(carts) {
 exports.createOrderCheckout = catchAsync(async (req, res, next) => {
   const carts = await Cart.find({ user: req.user._id }).populate({
     path: "product",
-    select: "name price coverImage",
+    select: "_id name price coverImage",
   });
   if (!carts) return next(new AppError("No Cart found!", 404));
 
   const newOrder = {
     products: carts.map((cart) => ({
-      _id: cart.productId,
+      _id: cart.product._id,
       color: cart.productColor,
       size: cart.productSize,
       quantity: cart.quantity,
