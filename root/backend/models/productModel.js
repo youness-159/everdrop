@@ -18,7 +18,7 @@ const productSchema = new mongoose.Schema({
   inStock: { type: Boolean, default: false },
   availability: { type: Boolean, default: false },
   quantity: { type: Number, min: 0 },
-  sales: Number,
+  sales: {type: Number, default: 0 },
   urlKey: { type: String, trim: true },
   metaTitle: { type: String, trim: true },
   metaKeywords: [{ type: String, trim: true }],
