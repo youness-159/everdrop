@@ -2,7 +2,6 @@ import Button from "../../ui/buttons/Button.jsx";
 import { useEffect, useState } from "react";
 import { getCheckoutSession } from "../../services/stripeAPI.js";
 import toast from "react-hot-toast";
-import { STRIPE_PUBLIC_KEY } from "../../utils/configs.js";
 import { useForm } from "react-hook-form";
 import useApplyCoupon from "../../hooks/coupons/useApplyCoupon.js";
 import { HiArrowLongRight } from "react-icons/hi2";
@@ -11,7 +10,7 @@ import useMyCart from "../../hooks/carts/useMyCart.js";
 import Loader from "../../ui/Loader.jsx";
 import useDeleteCartItem from "../../hooks/carts/useDeleteCartItem.js";
 import { useQueryClient } from "@tanstack/react-query";
-import { serverUrl } from "../../../configs.js";
+import {serverUrl, STRIPE_PUBLIC_KEY} from "../../../configs.js";
 
 function Cart() {
   const { cartItems, isLoading } = useMyCart();
