@@ -10,65 +10,10 @@ import {
 } from "recharts";
 import DashboardSection from "../../features/admin/dashboard/DashboardSection.jsx";
 import DashboardSectionHeader from "../../features/admin/dashboard/DashboardSectionHeader.jsx";
-import AdminOutletSectionHeader from "../../features/admin/AdminOutletSectionHeader.jsx";
-import AdminTable from "../../features/admin/admin-table/AdminTable.jsx";
-import { Link } from "react-router-dom";
-import AdminTableBody from "../../features/admin/admin-table/AdminTableBody.jsx";
-import AdminTableBodyRow from "../../features/admin/admin-table/AdminTableBodyRow.jsx";
-import AdminTableBodyColumn from "../../features/admin/admin-table/AdminTableBodyColumn.jsx";
 import Field from "../../ui/Field.jsx";
-
-function StatistiqueField() {
-  return (
-    <Field
-      legend={"Total Sells"}
-      className={"pb-2"}
-      childrenClassName={"gap-3"}
-    >
-      <div className={"flex justify-between items-baseline"}>
-        <strong className={"text-6xl text-gray-700"}>$3799.0</strong>
-        <p
-          className={
-            "text-right text-green-700 text-[1.8rem] -translate-y-1/4 "
-          }
-        >
-          ↗️34.7%
-        </p>
-      </div>
-      <p className={"text-center text-zinc-500"}>Compared to April 2021</p>
-    </Field>
-  );
-}
-
-function ActiveUsersField() {
-  return (
-    <Field legend={"Active users"} className={"grow"}>
-      <div
-        className={
-          "w-[90%] h-32 flex justify-center items-center mx-auto text-6xl  bg-blue-300"
-        }
-      >
-        148
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th className={"text-left py-6"}>Active pages</th>
-            <th className={"text-right "}>Users</th>
-          </tr>
-        </thead>
-        <tbody>
-          <ActivePage />
-          <ActivePage />
-          <ActivePage />
-          <ActivePage />
-          <ActivePage />
-          <ActivePage />
-        </tbody>
-      </table>
-    </Field>
-  );
-}
+import { useEffect, useState } from "react";
+import { serverUrl } from "../../../configs.js";
+import axios from "axios";
 
 function Dashboard() {
   const bestSellers = {
@@ -80,50 +25,42 @@ function Dashboard() {
     ],
   };
 
+  const [generalStatistiques, setGeneralStatistiques] = useState({});
+  const [percentageOfGrowth, setPercentageOfGrowth] = useState(0);
+  useEffect(() => {
+    axios
+      .get(`${serverUrl}/api/v1/everdrop/orders/salesPerMonth`, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        setGeneralStatistiques(res.data.data);
+      });
+  }, []);
+  console.log(generalStatistiques);
   return (
     <div>
       <div className={"grid grid-cols-3 gap-8"}>
-        <StatistiqueField />
-        <StatistiqueField />
-        <StatistiqueField />
+        {generalStatistiques[0] && (
+          <StatistiqueField
+            title={"Total Sales"}
+            totalSales={generalStatistiques[0]?.sales}
+            percentageOfGrowth={
+              (generalStatistiques[0]?.sales * 100) /
+              generalStatistiques[1]?.sales
+            }
+          />
+        )}
+        <StatistiqueField title={"Total income"} totalSales={generalStatistiques[0]?.total}  percentageOfGrowth={
+            (generalStatistiques[0]?.total * 100) /
+            generalStatistiques[1]?.total
+        } />
+        {/*<StatistiqueField />*/}
       </div>
       <div className={"flex gap-6 mt-9"}>
-        <ActiveUsersField />
-        <SalesStatistics />
-      </div>
-    </div>
-  );
-
-  return (
-    <div>
-      <AdminOutletSectionHeader title={"Dashboard"} />
-      <div className={"flex"}>
-        <div className={"space-y-8"}>
-          <SalesStatistics />
-          <DashboardSection>
-            <DashboardSectionHeader>
-              <h3>Best Sealers</h3>
-              <Link to={"/admin/products"}>All Products</Link>
-            </DashboardSectionHeader>
-            <AdminTable className={"w-[40vw] text-center"}>
-              <AdminTableBody>
-                <AdminTableBodyRow>
-                  <AdminTableBodyColumn>
-                    <img
-                      src="../imgs/products/product-1.png"
-                      className={"w-32"}
-                      alt=""
-                    />
-                  </AdminTableBodyColumn>
-                  <AdminTableBodyColumn>Nmd_r1 shoes</AdminTableBodyColumn>
-                  <AdminTableBodyColumn>537.0</AdminTableBodyColumn>
-                  <AdminTableBodyColumn>144531</AdminTableBodyColumn>
-                </AdminTableBodyRow>
-              </AdminTableBody>
-            </AdminTable>
-          </DashboardSection>
-        </div>
-        <CategoriesMarketShare />
+        {/*<ActiveUsersField />*/}
+        {/*<SalesStatistics />*/}
       </div>
     </div>
   );
@@ -227,5 +164,53 @@ function ActivePage() {
       <td className={"py-3 "}>/products/brandix-z4</td>
       <td className={"text-right "}>15</td>
     </tr>
+  );
+}
+
+function StatistiqueField({ title, totalSales, percentageOfGrowth }) {
+  return (
+    <Field legend={title} className={"pb-2"} childrenClassName={"gap-3"}>
+      <div className={"flex justify-between items-baseline"}>
+        <strong className={"text-6xl text-gray-700"}>${totalSales}</strong>
+        <p
+          className={
+            "text-right text-green-700 text-[1.8rem] -translate-y-1/4 "
+          }
+        >
+          ↗️{percentageOfGrowth}
+        </p>
+      </div>
+      <p className={"text-center text-zinc-500"}>Compared to April 2021</p>
+    </Field>
+  );
+}
+
+function ActiveUsersField() {
+  return (
+    <Field legend={"Active users"} className={"grow"}>
+      <div
+        className={
+          "w-[90%] h-32 flex justify-center items-center mx-auto text-6xl  bg-blue-300"
+        }
+      >
+        148
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th className={"text-left py-6"}>Active pages</th>
+            <th className={"text-right "}>Users</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ActivePage />
+          <ActivePage />
+          <ActivePage />
+          <ActivePage />
+          <ActivePage />
+          <ActivePage />
+        </tbody>
+      </table>
+    </Field>
   );
 }
