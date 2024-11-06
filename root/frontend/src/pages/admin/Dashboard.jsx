@@ -1,66 +1,81 @@
-import {
-  Area,
-  AreaChart,
-  Legend,
-  Pie,
-  PieChart,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { useEffect, useState } from "react";
+import { HiArrowTrendingDown, HiArrowTrendingUp } from "react-icons/hi2";
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
+
 import DashboardSection from "../../features/admin/dashboard/DashboardSection.jsx";
 import DashboardSectionHeader from "../../features/admin/dashboard/DashboardSectionHeader.jsx";
 import Field from "../../ui/Field.jsx";
-import { useEffect, useState } from "react";
+import {
+  getDaysInMonth,
+  monthNumberToString,
+  months,
+} from "../../utils/helpers.js";
+import {
+  getDailySales,
+  getMonthlyNewUsers,
+  getMonthlySales,
+  getTopSoldProducts,
+} from "../../services/statisticsAPI.js";
 import { serverUrl } from "../../../configs.js";
-import axios from "axios";
 
 function Dashboard() {
-  const bestSellers = {
-    // headerRow: ["Image", "Product Name", "Price", "Sold"],
-    bodyRows: [
-      ["../imgs/products/product-1.png", "Nmd_r1 shoes", 537.0, 144531],
-      ["../imgs/products/product-1.png", "Nmd_r1 shoes", 537.0, 144531],
-      ["../imgs/products/product-1.png", "Nmd_r1 shoes", 537.0, 144531],
-    ],
-  };
+  const [generalStatistics, setGeneralStatistics] = useState([]);
+  const [monthlyUsers, setMonthlyUsers] = useState([]);
 
-  const [generalStatistiques, setGeneralStatistiques] = useState({});
-  const [percentageOfGrowth, setPercentageOfGrowth] = useState(0);
   useEffect(() => {
-    axios
-      .get(`${serverUrl}/api/v1/everdrop/orders/salesPerMonth`, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      })
-      .then((res) => {
-        setGeneralStatistiques(res.data.data);
-      });
+    getMonthlySales().then((data) => {
+      setGeneralStatistics(data);
+    });
+
+    getMonthlyNewUsers().then((data) => {
+      setMonthlyUsers(data);
+    });
   }, []);
-  console.log(generalStatistiques);
+
+  const totalSalesPercentage = (
+    (generalStatistics[0]?.sales * 100) /
+    generalStatistics[1]?.sales
+  ).toFixed(2);
+
+  const totalIncomePercentage = (
+    (generalStatistics[0]?.total * 100) /
+    generalStatistics[1]?.total
+  ).toFixed(2);
+
+  const totalNewUsersPercentage = (
+    (monthlyUsers[0]?.total * 100) /
+    monthlyUsers[1]?.total
+  ).toFixed(2);
+
   return (
     <div>
       <div className={"grid grid-cols-3 gap-8"}>
-        {generalStatistiques[0] && (
-          <StatistiqueField
-            title={"Total Sales"}
-            totalSales={generalStatistiques[0]?.sales}
-            percentageOfGrowth={
-              (generalStatistiques[0]?.sales * 100) /
-              generalStatistiques[1]?.sales
-            }
+        {generalStatistics[0] && (
+          <>
+            <StatisticField
+              title={"Total Sales"}
+              value={generalStatistics[0]?.sales}
+              percentageOfGrowth={totalSalesPercentage}
+            />
+            <StatisticField
+              title={"Total Income"}
+              value={"$" + generalStatistics[0]?.total}
+              percentageOfGrowth={totalIncomePercentage}
+            />
+          </>
+        )}
+
+        {monthlyUsers.length > 0 && (
+          <StatisticField
+            title={"Monthly New Users"}
+            value={monthlyUsers[0]?.total}
+            percentageOfGrowth={totalNewUsersPercentage}
           />
         )}
-        <StatistiqueField title={"Total income"} totalSales={generalStatistiques[0]?.total}  percentageOfGrowth={
-            (generalStatistiques[0]?.total * 100) /
-            generalStatistiques[1]?.total
-        } />
-        {/*<StatistiqueField />*/}
       </div>
       <div className={"flex gap-6 mt-9"}>
-        {/*<ActiveUsersField />*/}
-        {/*<SalesStatistics />*/}
+        <SalesStatistics />
+        <TopSoldProducts />
       </div>
     </div>
   );
@@ -68,149 +83,127 @@ function Dashboard() {
 
 export default Dashboard;
 
-function SalesStatistics() {
-  const areaData = [
-    { name: "Jan", uv: 4000, pv: 2400, amt: 2400 },
-    {
-      name: "Feb",
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    { name: "Mar", uv: 2000, pv: 9800, amt: 2290 },
-    { name: "Apr", uv: 2780, pv: 3908, amt: 2000 },
-    {
-      name: "May",
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    { name: "Jun", uv: 2390, pv: 3800, amt: 2500 },
-    { name: "Jul", uv: 3490, pv: 4300, amt: 2100 },
-    {
-      name: "Aug",
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    { name: "Sep", uv: 3000, pv: 1398, amt: 2210 },
-    { name: "Oct", uv: 2000, pv: 9800, amt: 2290 },
-    {
-      name: "Nov",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    { name: "Dec", uv: 1890, pv: 4800, amt: 2181 },
-  ];
+function TopSoldProducts() {
+  const [topProducts, setTopProducts] = useState([]);
+
+  useEffect(() => {
+    getTopSoldProducts().then((data) => setTopProducts(data));
+  }, []);
 
   return (
-    <DashboardSection header={"Sale Statistics"}>
+    <DashboardSection className={"w-full"}>
       <DashboardSectionHeader>
-        <h3>Sale Statistics</h3>
-        <ul className="flex gap-6">
-          <li>
-            <a href="">daily</a>
-          </li>
-          <li>
-            <a href="">weekly</a>
-          </li>
-          <li>
-            <a href="">monthly</a>
-          </li>
-        </ul>
+        <h3>Top Sold Products</h3>
       </DashboardSectionHeader>
-      <AreaChart width={600} height={400} data={areaData}>
-        <Area type="monotone" dataKey={"pv"} stroke="#06b6d4" fill="#06b6d4" />
-        <YAxis />
-        <XAxis dataKey={"name"} />
-        <Tooltip />
-      </AreaChart>
+      <div className={"space-y-6"}>
+        {topProducts.length !== 0 &&
+          topProducts.map((topProduct) => (
+            <div className={"flex gap-6"} key={topProduct._id}>
+              <div className={"w-20 h-20 border border-zinc-200 "}>
+                <img
+                  src={`${serverUrl}/imgs/products/${topProduct.coverImage}`}
+                  className={"w-full"}
+                  alt=""
+                />
+              </div>
+              <div className={"flex gap-4 py-2"}>
+                <div>
+                  <p>{topProduct.name}</p>
+                  <p>{topProduct.quantity}</p>
+                </div>
+                <div>
+                  <p>${topProduct.price}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+      </div>
     </DashboardSection>
   );
 }
 
-function CategoriesMarketShare() {
-  const pieData = [
-    { name: "Category A", value: 400 },
-    { name: "Category B", value: 300 },
-    {
-      name: "Category C",
-      value: 200,
-    },
-    { name: "Category D", value: 500 },
-  ];
+function SalesStatistics() {
+  const [salesStatistics, setSalesStatistics] = useState([]);
+  const [a, setA] = useState("monthly");
+
+  useEffect(() => {
+    if (a === "daily") {
+      getDailySales().then((dailySales) => {
+        const [currYear, currMonth] = [
+          new Date().getFullYear(),
+          new Date().getMonth() + 1,
+        ];
+
+        const dailyIncome = Array.from(
+          { length: getDaysInMonth(currYear, currMonth) },
+          (_, i) => i + 1,
+        ).map((day, index) => ({
+          name: day,
+          pv:
+            dailySales.filter((dayS) => dayS._id.day === index + 1)[0]?.total ||
+            0,
+        }));
+
+        setSalesStatistics(dailyIncome);
+      });
+    } else {
+      getMonthlySales().then((monthlySales) => {
+        const monthlyIncome = months.map((month, index) => ({
+          name: month,
+          pv:
+            monthlySales.filter((monthS) => monthS._id.month === index + 1)[0]
+              ?.total || 0,
+        }));
+        setSalesStatistics(monthlyIncome);
+      });
+    }
+  }, [a]);
+
   return (
-    <div className="pie-chart">
-      <PieChart width={400} height={400}>
-        <Pie
-          data={pieData}
-          dataKey={"value"}
-          nameKey={"name"}
-          innerRadius={"100"}
-          cx={"50%"}
-          cy={"50%"}
-          label
-        />
-        <Legend />
-      </PieChart>
-    </div>
+    <DashboardSection header={"Sale Statistics"} className={"w-fit"}>
+      <DashboardSectionHeader>
+        <h3>Sale Statistics</h3>
+        <ul className="flex gap-6">
+          <button onClick={() => setA("daily")}>daily</button>
+          <button onClick={() => setA("monthly")}>monthly</button>
+        </ul>
+      </DashboardSectionHeader>
+      <LineChart width={500} height={300} data={salesStatistics}>
+        <XAxis dataKey="name" />
+        <YAxis />
+        <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
+        <Line type="monotone" dataKey="pv" stroke="#82ca9d" />
+      </LineChart>
+    </DashboardSection>
   );
 }
 
-function ActivePage() {
-  return (
-    <tr>
-      <td className={"py-3 "}>/products/brandix-z4</td>
-      <td className={"text-right "}>15</td>
-    </tr>
-  );
-}
-
-function StatistiqueField({ title, totalSales, percentageOfGrowth }) {
+function StatisticField({ title, value, percentageOfGrowth }) {
   return (
     <Field legend={title} className={"pb-2"} childrenClassName={"gap-3"}>
-      <div className={"flex justify-between items-baseline"}>
-        <strong className={"text-6xl text-gray-700"}>${totalSales}</strong>
-        <p
-          className={
-            "text-right text-green-700 text-[1.8rem] -translate-y-1/4 "
-          }
-        >
-          ↗️{percentageOfGrowth}
-        </p>
-      </div>
-      <p className={"text-center text-zinc-500"}>Compared to April 2021</p>
-    </Field>
-  );
-}
-
-function ActiveUsersField() {
-  return (
-    <Field legend={"Active users"} className={"grow"}>
       <div
         className={
-          "w-[90%] h-32 flex justify-center items-center mx-auto text-6xl  bg-blue-300"
+          "flex justify-center flex-wrap gap-4  items-baseline mt-[-6px]  mb-6"
         }
       >
-        148
+        <strong className={"text-5xl text-gray-700"}>{value}</strong>
+        <p
+          className={`text-right ${percentageOfGrowth > 0 ? "text-green-700" : "text-red-700"} text-[1.5rem] -translate-y-1/4 flex gap-2`}
+        >
+          <span>
+            {percentageOfGrowth > 0 ? (
+              <HiArrowTrendingUp />
+            ) : (
+              <HiArrowTrendingDown />
+            )}
+          </span>
+          <span>{percentageOfGrowth} %</span>
+        </p>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th className={"text-left py-6"}>Active pages</th>
-            <th className={"text-right "}>Users</th>
-          </tr>
-        </thead>
-        <tbody>
-          <ActivePage />
-          <ActivePage />
-          <ActivePage />
-          <ActivePage />
-          <ActivePage />
-          <ActivePage />
-        </tbody>
-      </table>
+      <p className={"text-center text-zinc-500"}>
+        Compared to {monthNumberToString(new Date().getMonth())}{" "}
+        {new Date().getFullYear()}
+      </p>
     </Field>
   );
 }

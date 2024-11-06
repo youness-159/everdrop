@@ -100,3 +100,28 @@ export function removeNullValues(obj) {
     ),
   );
 }
+
+
+export const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+export function monthNumberToString(monthNumber) {
+  return months[monthNumber - 1];
+}
+
+export function getDaysInMonth(year, month) {
+  return new Date(year, month, 0).getDate();
+}
+
