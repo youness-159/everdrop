@@ -20,21 +20,17 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now() },
 });
 
-const User = mongoose.model("User", userSchema);
-
-module.exports = User;
-
 userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 12);
   next();
 });
 
-// userSchema.methods.correctPassword = async function (
-//   candidatePassword,
-//   userPassword,
-// ) {
-//   return await bcrypt.compare(candidatePassword, userPassword);
-// };
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword,
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 
 userSchema.methods.createResetPasswordToken = function () {
   const randomNumber = crypto.randomBytes(32).toString("hex");
@@ -44,10 +40,12 @@ userSchema.methods.createResetPasswordToken = function () {
     .digest("hex");
 
   this.passwordResetTokenExpires = Date.now() + 15 * 60 * 1000;
-  console.log(
-    "reset token",
-    this.passwordResetToken,
-    this.passwordResetTokenExpires,
-  );
+
   return this.passwordResetToken;
 };
+
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;
+
+
