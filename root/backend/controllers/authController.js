@@ -78,7 +78,7 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError("Please provide email and password!", 400));
 
   const user = await User.findOne({ email }).select("+password");
-  const isCorrectPassword = await bcrypt.compare(password, user.password);
+  const isCorrectPassword = await user.correctPassword(password, user.password);
 
   if (!user || !isCorrectPassword)
     return next(new AppError("Incorrect email or password", 401));
@@ -94,13 +94,12 @@ exports.signup = catchAsync(async (req, res, next) => {
   if (password !== passwordConfirm)
     return next(new AppError("passwordConfirm do not match password !", 400));
 
-  const hashedPassword = await bcrypt.hash(password, 12);
 
   const verificationCode = Math.floor(Math.random() * 999_999);
   const verificationCodeExpires = Date.now() + 5 * 60 * 1000;
   const user = await User.create({
     email,
-    password: hashedPassword,
+    password,
     fullName,
     verificationCode,
     verificationCodeExpires,
@@ -139,11 +138,6 @@ function createResetPasswordToken(user) {
     .digest("hex");
 
   user.passwordResetTokenExpires = Date.now() + 15 * 60 * 1000;
-  console.log(
-    "reset token",
-    user.passwordResetToken,
-    user.passwordResetTokenExpires,
-  );
   return user.passwordResetToken;
 }
 
@@ -157,7 +151,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const token = createResetPasswordToken(user);
   await user.save({ validateBeforeSave: false });
 
-  const url = `http://localhost:5173/account/reset-password?token=${token}`;
+  const url = `${process.env.FRONTEND_URL}/account/reset-password?token=${token}`;
 
   await new Email(user, url).send(
     `reset password url: ${url} .reset token will be expired by 15min`,
@@ -181,7 +175,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   if (password !== passwordConfirm)
     return next(new AppError("passwordConfirm fo not match password", 400));
 
-  user.password = await bcrypt.hash(req.body.password, 12);
+  user.password = req.body.password;
   user.passwordResetToken = undefined;
   user.passwordResetTokenExpires = undefined;
   user.passwordChangedAt = Math.floor(new Date().getTime() / 1000);
