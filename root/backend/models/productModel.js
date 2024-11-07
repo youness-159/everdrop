@@ -1,4 +1,6 @@
+const fs = require("fs");
 const mongoose = require("mongoose");
+
 const Cart = require("./cartModel");
 const AppError = require("../utils/AppError");
 
@@ -31,6 +33,14 @@ const productSchema = new mongoose.Schema({
 productSchema.pre("findOneAndDelete", async function (next) {
   try {
     await Cart.deleteMany({ product: this.getQuery()._id });
+
+    const product = await Product.findById(this.getQuery()._id); // fs.unlink(`../public/imgs/products/${ge}.json`);
+    if (!product) next();
+
+    fs.unlink(`./public/imgs/products/${product.coverImage}`, (err) => {
+      console.log(err);
+    });
+
     next();
   } catch (err) {
     next(new AppError("Error while deleting cart"));
