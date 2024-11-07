@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const Cart = require("./cartModel");
+const AppError = require("../utils/AppError");
 
 const productSchema = new mongoose.Schema({
   name: { type: String, trim: true, required: true },
@@ -18,12 +20,21 @@ const productSchema = new mongoose.Schema({
   inStock: { type: Boolean, default: false },
   availability: { type: Boolean, default: false },
   quantity: { type: Number, min: 0 },
-  sales: {type: Number, default: 0 },
+  sales: { type: Number, default: 0 },
   urlKey: { type: String, trim: true },
   metaTitle: { type: String, trim: true },
   metaKeywords: [{ type: String, trim: true }],
   metaDescription: { type: String, trim: true },
   createdAt: { type: Date, default: Date.now() },
+});
+
+productSchema.pre("findOneAndDelete", async function (next) {
+  try {
+    await Cart.deleteMany({ product: this.getQuery()._id });
+    next();
+  } catch (err) {
+    next(new AppError("Error while deleting cart"));
+  }
 });
 
 const Product = mongoose.model("Product", productSchema);
