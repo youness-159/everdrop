@@ -25,10 +25,6 @@ const orderSchema = new mongoose.Schema({
 
 orderSchema.plugin(AutoIncrement, { inc_field: "orderNumber" });
 
-const Order = mongoose.model("Order", orderSchema);
-
-module.exports = Order;
-
 orderSchema.pre(/^find/, function (next) {
   this.populate({ path: "user", select: "fullName email" });
 
@@ -46,3 +42,9 @@ orderSchema.pre("save", async function (next) {
     }),
   );
 });
+
+const Order = mongoose.model("Order", orderSchema);
+
+module.exports = Order;
+
+
