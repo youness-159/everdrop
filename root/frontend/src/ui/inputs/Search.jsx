@@ -40,7 +40,7 @@ function SearchBar({ placeholder, onSearch, inputClassname }) {
       />
       <button
         className="absolute right-8 top-1/2 -translate-y-1/2  text-slate-600 "
-        type="submit"
+        type="button"
       >
         <HiMagnifyingGlass className="text-3xl" />
       </button>

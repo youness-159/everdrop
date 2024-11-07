@@ -19,7 +19,7 @@ import useProducts from "../../../hooks/products/useProducts.js";
 import useDeleteProduct from "../../../hooks/products/useDeleteProduct.js";
 import Form from "../../../ui/Form.jsx";
 import { getProductsLength } from "../../../services/productAPI.js";
-import {serverUrl} from "../../../../configs.js";
+import { serverUrl } from "../../../../configs.js";
 
 function AdminProducts() {
   const { products, isLoading } = useProducts();
@@ -50,8 +50,8 @@ function ProductsFilter() {
       <Search
         placeholder={"Products"}
         className={"w-[35%]"}
-        name={"productName"}
-        onSearch={onSearchBy("productName")}
+        name={"name"}
+        onSearch={onSearchBy("name")}
       />
       <FromToInputs
         onFrom={onSearchBy("price[gte]")}
