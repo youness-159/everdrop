@@ -94,7 +94,7 @@ function NewProductLeftSide({ register }) {
         <Input
           label={"Brand"}
           placeholder={"Nike, Adidas, ..."}
-          name={"colors"}
+          name={"brand"}
           register={register}
         />
 
